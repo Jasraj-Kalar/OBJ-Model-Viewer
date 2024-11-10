@@ -1,6 +1,5 @@
 .DS_Store
 .vscode
-inc
 bin
 obj
 manowl.obj

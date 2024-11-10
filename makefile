@@ -1,20 +1,20 @@
 CC=clang
 CFLAGS=-g
-CFLAGS+=-I/opt/homebrew/Cellar/glfw/3.4/include
 CFLAGS+=-I$(INC)/glad/include
 CFLAGS+=-I$(INC)/cglm/include
+CFLAGS+=-I$(INC)/glfw/include
 
 CXX=clang++
 CXXFLAGS=-g -Wall -std=c++20
 
 LDFLAGS=-g
-LDLIBS+=-L/opt/homebrew/Cellar/glfw/3.4/lib -lglfw
+LDLIBS+=-L$(INC)/glfw/lib -lglfw
 
 CPPFLAGS=
 
 BIN=bin/output
 OBJ=obj
-INC=inc
+INC=ext
 SRC=src
 
 SRCDIRS=$(SRC)
