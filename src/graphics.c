@@ -19,6 +19,7 @@ static mat4 mvp;
 static vec3 lightPosition;
 static vec3 lightColor;
 static vec3 modelColor;
+static vec3 cameraPosition;
 static ScreenSize *screenPtr;
 static float scale = 4.0;
 static float *vertices;
@@ -32,6 +33,7 @@ static int uniformLocationLightPosition;
 static int uniformLocationLightColor;
 static int uniformLocationModelColor;
 static int uniformLocationModelReflectance;
+static int uniformLocationCameraPosition;
 
 void initialiseOpenGL(void *procAddressFunction, ScreenSize *screenSize, char *modelName)
 {
@@ -73,8 +75,9 @@ void initialiseOpenGL(void *procAddressFunction, ScreenSize *screenSize, char *m
     glm_mat4_identity(view);
     glm_mat4_identity(proj);
 
+    glm_vec3_copy((vec3){0.0f, 0.0f, 10.0f}, cameraPosition);
     glm_perspective(glm_rad(45.0f), screenPtr->width / screenPtr->height, 0.1, 100, proj);
-    glm_lookat((vec3){0, 0, 10}, (vec3){0, 0, 0}, (vec3){0, 1, 0}, view);
+    glm_lookat(cameraPosition, (vec3){0, 0, 0}, (vec3){0, 1, 0}, view);
     glm_translate(model, (vec3){0, 0, 0});
     glm_scale(model, (vec3){scale, scale, scale});
     glm_mat4_mulN((mat4 *[]){&proj, &view, &model}, 3, mvp);
@@ -89,12 +92,14 @@ void initialiseOpenGL(void *procAddressFunction, ScreenSize *screenSize, char *m
     uniformLocationModelReflectance = glGetUniformLocation(shaderProgram, "modelReflectance");
     uniformLocationLightColor = glGetUniformLocation(shaderProgram, "lightColor");
     uniformLocationLightPosition = glGetUniformLocation(shaderProgram, "lightPosition");
+    uniformLocationCameraPosition = glGetUniformLocation(shaderProgram, "cameraPosition");
 
     glUniformMatrix4fv(uniformLocationMVP, 1, GL_FALSE, (float *)mvp);
     glUniformMatrix4fv(uniformLocationModel, 1, GL_FALSE, (float *)model);
     glUniform3fv(uniformLocationModelColor, 1, (float *)modelColor);
     glUniform3fv(uniformLocationLightColor, 1, (float *)lightColor);
     glUniform3fv(uniformLocationLightPosition, 1, (float *)lightPosition);
+    glUniform3fv(uniformLocationCameraPosition, 1, (float *)cameraPosition);
     glUniform1f(uniformLocationModelReflectance, reflectance);
     GET_GL_ERRORS();
 

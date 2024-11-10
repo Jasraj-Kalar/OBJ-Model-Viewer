@@ -3,4 +3,8 @@
 inc
 bin
 obj
-res
+manowl.obj
+donkey.obj
+lid.obj
+shape.obj
+todo.txt
