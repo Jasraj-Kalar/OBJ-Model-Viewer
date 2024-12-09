@@ -1,5 +1,8 @@
+set(CMAKE_C_COMPILER "gcc")
+set(CMAKE_CXX_COMPILER "gcc")
+
 cmake_minimum_required(VERSION 3.10)
-project(OpenGLApp)
+project(ModelViewer)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -28,17 +31,18 @@ FetchContent_MakeAvailable(cglm)
 file(GLOB SOURCES src/*.c)
 
 # Create executable
-add_executable(OpenGLApp ${SOURCES})
+add_executable(ModelViewer ${SOURCES})
+set_target_properties(ModelViewer PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
 # Link libraries
-target_link_libraries(OpenGLApp PRIVATE glfw glad_library cglm)
+target_link_libraries(ModelViewer PRIVATE glfw glad_library cglm)
 
 # Platform-specific configuration
 if(WIN32)
-    target_link_libraries(OpenGLApp PRIVATE opengl32)
+    target_link_libraries(ModelViewer PRIVATE opengl32)
 elseif(APPLE)
-    target_link_libraries(OpenGLApp PRIVATE "-framework OpenGL" "-framework Cocoa")
+    target_link_libraries(ModelViewer PRIVATE "-framework OpenGL" "-framework Cocoa")
 elseif(UNIX)
     find_package(X11 REQUIRED)
-    target_link_libraries(OpenGLApp PRIVATE ${X11_LIBRARIES})
+    target_link_libraries(ModelViewer PRIVATE ${X11_LIBRARIES})
 endif()

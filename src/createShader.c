@@ -48,7 +48,7 @@ unsigned int createShaderProgram(char * vertexShaderPath, char * fragmentShaderP
 
 char * loadShaderFromFile(char * filePath)
 {
-    FILE * input = fopen(filePath, "r");
+    FILE * input = fopen(filePath, "rb");
 
     if (input == NULL)
     {
@@ -73,6 +73,7 @@ char * loadShaderFromFile(char * filePath)
 
     if (fread(shaderSource, 1, fileSize, input) != fileSize)
     {
+        printf("%s\n", shaderSource);
         printf("Error reading shader.\n");
         free(shaderSource);
         fclose(input);

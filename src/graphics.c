@@ -44,7 +44,7 @@ void initialiseOpenGL(void *procAddressFunction, ScreenSize *screenSize, char *m
     if (!gladLoadGLLoader((GLADloadproc)procAddressFunction))
         printf("Failed to initialise GLAD.\n");
 
-    shaderProgram = createShaderProgram("src/res/shaders/vertex.shader", "src/res/shaders/fragment.shader");
+    shaderProgram = createShaderProgram("src\\res\\shaders\\vertex.shader", "src\\res\\shaders\\fragment.shader");
     glUseProgram(shaderProgram);
 
     glGenVertexArrays(1, &VAO);
