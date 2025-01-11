@@ -8,7 +8,4 @@ void initialiseApplication(char * modelName);
 void renderFrames();
 void releaseResources();
 
-// Private method(s)
-
-
 #endif

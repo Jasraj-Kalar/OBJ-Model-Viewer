@@ -8,7 +8,5 @@
 
 void glGetErrors(int line, const char * file);
 
-// Private method(s)
-
 
 #endif

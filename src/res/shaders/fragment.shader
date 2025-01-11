@@ -17,7 +17,7 @@ uniform float modelReflectance;
 void main()
 {
     // Ambient lighting
-    vec3 ambient = 0.4 * lightColor;
+    vec3 ambient = 0.7 * lightColor;
 
     // Diffuse lighting
     vec3 norm = normalize(normals);
@@ -31,9 +31,9 @@ void main()
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), modelReflectance);
     vec3 specular = spec * lightColor;
 
-    // Combined lighting componenets
-    vec3 result = (ambient + diffuse + specular) * modelColor;
+    // Combine lighting componenets
+    vec3 absoluteColor = (ambient + diffuse + specular) * modelColor;
 
     // Set the final fragment color
-    FinalFragmentColor = vec4(result, 1.0);
+    FinalFragmentColor = vec4(absoluteColor, 1.0);
 }

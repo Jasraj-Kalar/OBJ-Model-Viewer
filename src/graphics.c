@@ -84,7 +84,7 @@ void initialiseOpenGL(void *procAddressFunction, ScreenSize *screenSize, char *m
     glm_vec3_copy((vec3){0.5f, 0.5f, 0.5f}, modelColor);
     glm_vec3_copy((vec3){0.8f, 0.1f, 0.2f}, lightColor);
     glm_vec3_copy((vec3){5.0f, 5.0f, 10.0f}, lightPosition);
-    reflectance = 60.0;
+    reflectance = 80.0;
 
     uniformLocationMVP = glGetUniformLocation(shaderProgram, "MVP");
     uniformLocationModel = glGetUniformLocation(shaderProgram, "model");
@@ -120,7 +120,7 @@ void renderOpenGL()
     glUniformMatrix4fv(uniformLocationMVP, 1, GL_FALSE, (float *)mvp);
     GET_GL_ERRORS();
 
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     GET_GL_ERRORS();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     GET_GL_ERRORS();
