@@ -16,6 +16,7 @@ static mat4 proj;
 static mat4 view;
 static mat4 model;
 static mat4 mvp;
+static mat3 normalMatrix;
 static vec3 lightPosition;
 static vec3 lightColor;
 static vec3 modelColor;
@@ -34,6 +35,7 @@ static int uniformLocationLightColor;
 static int uniformLocationModelColor;
 static int uniformLocationModelReflectance;
 static int uniformLocationCameraPosition;
+static int uniformLocationNormalMatrix;
 
 void initialiseOpenGL(void *procAddressFunction, ScreenSize *screenSize, char *modelName)
 {
@@ -66,7 +68,7 @@ void initialiseOpenGL(void *procAddressFunction, ScreenSize *screenSize, char *m
     glEnableVertexAttribArray(1);
     GET_GL_ERRORS();
 
-    // Unbind VAO and buffers to prevent unintentional modification
+    // Unbind VAO and buffers
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
     GET_GL_ERRORS();
@@ -81,9 +83,16 @@ void initialiseOpenGL(void *procAddressFunction, ScreenSize *screenSize, char *m
     glm_translate(model, (vec3){0, 0, 0});
     glm_scale(model, (vec3){scale, scale, scale});
     glm_mat4_mulN((mat4 *[]){&proj, &view, &model}, 3, mvp);
+
+    glm_mat4_pick3(model, normalMatrix);
+    glm_mat3_inv(normalMatrix, normalMatrix);
+    glm_mat3_transpose(normalMatrix);
+
     glm_vec3_copy((vec3){0.5f, 0.5f, 0.5f}, modelColor);
     glm_vec3_copy((vec3){0.8f, 0.1f, 0.2f}, lightColor);
     glm_vec3_copy((vec3){5.0f, 5.0f, 10.0f}, lightPosition);
+
+    // Lower values yeild more reflectance. 80 = Medium reflectance
     reflectance = 80.0;
 
     uniformLocationMVP = glGetUniformLocation(shaderProgram, "MVP");
@@ -93,9 +102,11 @@ void initialiseOpenGL(void *procAddressFunction, ScreenSize *screenSize, char *m
     uniformLocationLightColor = glGetUniformLocation(shaderProgram, "lightColor");
     uniformLocationLightPosition = glGetUniformLocation(shaderProgram, "lightPosition");
     uniformLocationCameraPosition = glGetUniformLocation(shaderProgram, "cameraPosition");
+    uniformLocationNormalMatrix = glGetUniformLocation(shaderProgram, "normalMatrix");
 
     glUniformMatrix4fv(uniformLocationMVP, 1, GL_FALSE, (float *)mvp);
     glUniformMatrix4fv(uniformLocationModel, 1, GL_FALSE, (float *)model);
+    glUniformMatrix3fv(uniformLocationNormalMatrix, 1, GL_FALSE, (float *)normalMatrix);
     glUniform3fv(uniformLocationModelColor, 1, (float *)modelColor);
     glUniform3fv(uniformLocationLightColor, 1, (float *)lightColor);
     glUniform3fv(uniformLocationLightPosition, 1, (float *)lightPosition);
@@ -106,9 +117,6 @@ void initialiseOpenGL(void *procAddressFunction, ScreenSize *screenSize, char *m
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
     GET_GL_ERRORS();
-
-    // Use to implement wireframe functionality
-    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
 void renderOpenGL()
@@ -116,8 +124,13 @@ void renderOpenGL()
     // MVP is updated due to screensize changes impacting the projection matrix
     glm_perspective(glm_rad(45.0f), screenPtr->width / screenPtr->height, 0.1, 100, proj);
     glm_mat4_mulN((mat4 *[]){&proj, &view, &model}, 3, mvp);
+    glm_mat4_pick3(model, normalMatrix);
+    glm_mat3_inv(normalMatrix, normalMatrix);
+    glm_mat3_transpose(normalMatrix);
     glUniformMatrix4fv(uniformLocationModel, 1, GL_FALSE, (float *)model);
     glUniformMatrix4fv(uniformLocationMVP, 1, GL_FALSE, (float *)mvp);
+    glUniformMatrix3fv(uniformLocationNormalMatrix, 1, GL_FALSE, (float *)normalMatrix);
+    
     GET_GL_ERRORS();
 
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -126,7 +139,7 @@ void renderOpenGL()
     GET_GL_ERRORS();
     glBindVertexArray(VAO);
     GET_GL_ERRORS();
-    // TODO what is the magic number?
+
     glDrawArrays(GL_TRIANGLES, 0, vertexCount / 3);
     GET_GL_ERRORS();
     glBindVertexArray(0);

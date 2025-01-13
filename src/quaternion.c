@@ -11,8 +11,6 @@
 
 #include "quaternion.h"
 
-void screenCoordsToVector(int xCoord, int yCoord, ScreenSize * size, vec3 * v);
-
 void quaternionRotation(mat4 * modelMatrix, MousePosition * positions, ScreenSize * size)
 {
     vec3 oldVector, newVector;

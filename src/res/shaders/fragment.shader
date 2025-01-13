@@ -17,18 +17,21 @@ uniform float modelReflectance;
 void main()
 {
     // Ambient lighting
-    vec3 ambient = 0.7 * lightColor;
+    float lightingStrength = 0.7;
+    vec3 ambient = lightingStrength * lightColor;
+
+    // Normalise normals
+    vec3 norm = normalize(normals);
 
     // Diffuse lighting
-    vec3 norm = normalize(normals);
     vec3 lightDir = normalize(lightPosition - vertices);
     float diff = max(dot(norm, lightDir), 0.0);
     vec3 diffuse = diff * lightColor;
 
     // Specular lighting
     vec3 viewDir = normalize(cameraPosition - vertices);
-    vec3 reflectDir = reflect(-lightDir, norm);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), modelReflectance);
+    vec3 halfVec = normalize(lightDir + viewDir);
+    float spec = pow(max(dot(norm, halfVec), 0.0), modelReflectance);
     vec3 specular = spec * lightColor;
 
     // Combine lighting componenets
