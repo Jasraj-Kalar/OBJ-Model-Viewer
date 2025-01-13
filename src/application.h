@@ -8,4 +8,9 @@ void initialiseApplication(char * modelName);
 void renderFrames();
 void releaseResources();
 
+// Private Methods(s)
+
+void groupRuntime();
+
+
 #endif

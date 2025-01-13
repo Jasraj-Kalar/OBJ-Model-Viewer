@@ -14,7 +14,7 @@ void initialiseWindowSizeCallbackGLFW(viewportResizeFP viewportResize);
 void initialiseMouseMovementCallbackGLFW(mouseMovementFP mouseMovement);
 void initialiseMouseScrollCallbackGLFW(mouseScrollFP mouseScroll);
 void * procAddressGLFW();
-void processFrameGLFW();
+void processFrameGLFW(double elapsedTime, int fps);
 void processInputGLFW();
 bool applicationOpenGLFW();
 void releaseGLFW();

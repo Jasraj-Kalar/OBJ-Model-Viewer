@@ -1,4 +1,4 @@
-#include "stdio.h"
+#include <stdio.h>
 
 #include <GLFW/glfw3.h>
 
@@ -52,6 +52,13 @@ void initialiseGLFW()
 
     glfwMakeContextCurrent(window);
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+
+    // Remove Apple specific IMK system logs
+    #ifdef __APPLE__
+        printf("\033[A\033[K");
+        printf("\033[A\033[K");
+        printf("\r");
+    #endif
 }
 
 void * procAddressGLFW()
@@ -59,10 +66,25 @@ void * procAddressGLFW()
     return (void *)glfwGetProcAddress;
 }
 
-void processFrameGLFW()
+void processFrameGLFW(double elapsedTime, int fps)
 {
+    double startTime = glfwGetTime();
     glfwSwapBuffers(window);
     glfwPollEvents();
+
+    // Sleep to limit FPS
+    float frameTime = 1.0 / fps;
+    double endTime = glfwGetTime();
+    double deltaTime = endTime - startTime + elapsedTime;
+
+    if (deltaTime < frameTime) 
+    {
+        double sleepTime = frameTime - deltaTime;
+        
+        // Handle events during sleep
+        while (glfwGetTime() - endTime < sleepTime)
+            glfwPollEvents();
+    }
 }
 
 void processInputGLFW()
