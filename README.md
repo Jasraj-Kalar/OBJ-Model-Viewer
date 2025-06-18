@@ -29,9 +29,9 @@ OBJ Model Viewer provides a lightweight tool for designers and engineers who nee
 
 ![Man Owl Zoomed](./images/Man_Owl_Zoomed.png)
 
-![Box](./images/box.png)
+![Box](./images/Box.png)
 
-![Cube](./images/cube.png)
+![Cube](./images/Cube.png)
 
 ---
 
