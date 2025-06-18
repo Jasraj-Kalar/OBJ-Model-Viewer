@@ -1,7 +1,6 @@
 #ifndef BENCHMARK 
 #define BENCHMARK
 
-#include <time.h>
 #include <stdio.h>
 
 typedef void (*voidFunction)();
