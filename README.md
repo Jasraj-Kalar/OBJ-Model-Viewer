@@ -44,6 +44,8 @@ Make sure you have the following installed:
 - [CMake](https://cmake.org/download/) (version 3.10 or newer)
 - A C++ compiler with C++17 support
 - OpenGL (usually included with graphics drivers)
+- Make
+- Git
 
 > GLFW and cGLM are automatically downloaded and built using CMake's `FetchContent`.
 
