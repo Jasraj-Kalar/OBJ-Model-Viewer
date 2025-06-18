@@ -27,11 +27,11 @@ OBJ Model Viewer provides a lightweight tool for designers and engineers who nee
 
 ![ManOwl](./images/Man_Owl.png)
 
-![Diagram](./images/Man_Owl_Zoomed.png)
+![Man Owl Zoomed](./images/Man_Owl_Zoomed.png)
 
-![Diagram](./images/box.png)
+![Box](./images/box.png)
 
-![Diagram](./images/cube.png)
+![Cube](./images/cube.png)
 
 ---
 
@@ -56,8 +56,9 @@ mkdir build
 cd build
 cmake ..
 make
-
-cd ..
+```
+### Running Instructions
+```
 ./bin/ModelViewer <OBJ File Name>
 ```
 
