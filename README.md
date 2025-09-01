@@ -1,6 +1,6 @@
 # OBJ Model Viewer
 
-OBJ Model Viewer is a **cross-platform**, **interactive**, **GPU-accelerated** 3D model viewer built to visualize and interact with `.obj` files. It leverages OpenGL for rendering, GLFW for window and input handling, and cGLM for matrix and vector operations.
+Created to learn OpenGL and GLFW, OBJ Model Viewer is a **cross-platform**, **interactive**, **GPU-accelerated** 3D model viewer built to visualize and interact with `.obj` files. It leverages OpenGL for rendering, GLFW for window and input handling, and cGLM for matrix and vector operations.
 
 ![Key](./images/Key.png)
 
@@ -17,9 +17,8 @@ OBJ Model Viewer is a **cross-platform**, **interactive**, **GPU-accelerated** 3
 
 ## Usage
 
-OBJ Model Viewer provides a lightweight tool for designers and engineers who need a fast and efficient way to preview `.obj` models. It's especially useful for:
+OBJ Model Viewer provides a lightweight tool for those who need a fast and efficient way to preview `.obj` models. It's especially useful for:
 
-- Demonstrating 3D assets to clients in an intuitive and responsive UI.
 - Lightweight inspection of geometry without loading full-scale design tools.
 
 ---
